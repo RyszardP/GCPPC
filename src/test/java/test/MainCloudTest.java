@@ -31,13 +31,16 @@ public class MainCloudTest {
                 .typeInSearch(SEARCH_PHRASE)
                 .clickInSearchResult()
                 .clickOnEqualByText(SEARCH_PHRASE)
-        ;
+             //   .clickOnComputeEngine()
+                .typeNumberOfInstances(4)
+                .selectOSSoftware()        ;
     }
 
     @Test(description = "Open google cloud pricing calculator page")
     public void scenarioWithGoogleCloudCalculatorTest() {
         new GoogleCloudPlatformPricingCalculatorPage(driver)
-                .openPage("https://cloud.google.com/products/calculator");
+                .openPage("https://cloud.google.com/products/calculator")
+                .typeNumberOfInstances(4);
     }
 
 
