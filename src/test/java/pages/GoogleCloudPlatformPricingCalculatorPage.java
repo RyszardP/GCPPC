@@ -55,16 +55,11 @@ public class GoogleCloudPlatformPricingCalculatorPage extends AbstractPage {
         return this;
     }
 
-    //   new WebDriverWait(driver, 10)
-    //                .until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(By.xpath(FRAME_XPATH)));
-//<iframe src="/products/calculator/index_ad8ca20a6d1799e286a0c0839aeb86ca523afe927b04501d8ba77dc59e5b8523.frame" allowfullscreen="" name="goog_471502676"></iframe>
-    public GoogleCloudPlatformPricingCalculatorPage typeNumberOfInstances(String string){
-
-        new WebDriverWait(driver, 10)
-                .until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(By.xpath(String.valueOf(mainIframe))));
-        new WebDriverWait(driver, 10)
-                .until(ExpectedConditions.visibilityOf(numberOfInstancesField)).sendKeys(string);
+    public GoogleCloudPlatformPricingCalculatorPage typeNumberOfInstances(Integer quantity){
+        driver.switchTo().frame(0);
+        numberOfInstancesField.sendKeys(quantity.toString());
         return this;
+
     }
 
 

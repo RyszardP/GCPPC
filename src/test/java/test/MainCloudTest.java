@@ -14,6 +14,8 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 
 public class MainCloudTest {
+    private static final String SEARCH_PHRASE = "Google Cloud Platform Pricing Calculator";
+
     WebDriver driver;
 
     @BeforeMethod(alwaysRun = true)
@@ -26,19 +28,16 @@ public class MainCloudTest {
     public void scenarioWithGoogleCloudTest() {
         new CloudGooglePage(this.driver)
                 .openPage("https://cloud.google.com/")
-                .typeInSearch("Google Cloud Platform Pricing Calculator")
-                .clickEnterInSearch()
-                .clickOnFirst()
-                .clickOnComputeEngine()
-                .typeNumberOfInstances(String.valueOf(4));
-
+                .typeInSearch(SEARCH_PHRASE)
+                .clickInSearchResult()
+                .clickOnEqualByText(SEARCH_PHRASE)
+        ;
     }
 
     @Test(description = "Open google cloud pricing calculator page")
     public void scenarioWithGoogleCloudCalculatorTest() {
         new GoogleCloudPlatformPricingCalculatorPage(driver)
-                .openPage("https://cloud.google.com/products/calculator")
-                .typeNumberOfInstances(String.valueOf(4));
+                .openPage("https://cloud.google.com/products/calculator");
     }
 
 
@@ -47,7 +46,7 @@ public class MainCloudTest {
         new CloudGooglePage(this.driver)
                 .openPage("https://cloud.google.com/")
                 .openNewTab("https://temp-mail.org/ru/")
-        .getTempMAilAddress();
+                .getTempMAilAddress();
     }
 
     @Test(description = "try open tab")
@@ -63,11 +62,11 @@ public class MainCloudTest {
         new CloudGooglePage(this.driver)
                 .openPage("https://cloud.google.com/")
                 .openNewTabTempMailOrgTest("https://temp-mail.org/")
-               .getAddress();
+                .getAddress();
     }
-    @AfterMethod(alwaysRun = true)
+ /*   @AfterMethod(alwaysRun = true)
     public void afterTestCompleted() {
         driver.quit();
         driver = null;
-    }
+    }*/
 }

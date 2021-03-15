@@ -12,10 +12,16 @@ public class CloudGooglePage extends AbstractPage {
 
     final private String CLOUD_URL = "https://cloud.google.com/";
     final private String CALCULATOR_LINK = "Google Cloud Platform Pricing Calculator";
+    private String searchTextLink;
 
     @FindBy(xpath = "//input[@name='q']")
     private WebElement searchField;
 
+    @FindBy(xpath = "//input[contains(@class, 'devsite-search-field')]")
+    WebElement searchButton;
+
+    @FindBy(className = "devsite-search-results")
+    WebElement searchResults;
 
     public CloudGooglePage(WebDriver driver) {
         super(driver);
@@ -25,14 +31,19 @@ public class CloudGooglePage extends AbstractPage {
     public CloudGooglePage openPage(String url) {
         driver.get(url);
         driver.manage().window().maximize();
+        new WebDriverWait(driver, 10);
         return this;
     }
 
     public CloudGooglePage typeInSearch(String string) {
-        new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(searchField))
-                .sendKeys(string);
+        new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(searchField));
+        searchTextLink = string;
+        searchButton.click();
+        searchField.sendKeys(string);
+        searchField.sendKeys(Keys.ENTER);
         return this;
     }
+
 
     public TempMailPage openNewTab(String url) {
         ((JavascriptExecutor) driver).executeScript("window.open()");
@@ -58,9 +69,9 @@ public class CloudGooglePage extends AbstractPage {
         return new TempMailOrgPage(driver);
     }
 
-    public SearchResultPage clickEnterInSearch() {
-        new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(searchField))
-                .sendKeys(Keys.ENTER);
+    public SearchResultPage clickInSearchResult() {
+        new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(searchField));
+
         return new SearchResultPage(driver);
     }
 
