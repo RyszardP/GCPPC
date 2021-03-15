@@ -44,7 +44,7 @@ public class MainCloudTest {
                 .selectOSSoftware()
                 .selectMachineClass()
                 .selectSeries()
-        //  .selectInstance()
+                .selectInstance()
         ;
     }
 

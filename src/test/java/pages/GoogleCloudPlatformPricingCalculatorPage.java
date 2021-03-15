@@ -16,7 +16,6 @@ public class GoogleCloudPlatformPricingCalculatorPage extends AbstractPage {
 
     public static ArrayList<String> tabs;
 
-    private final String FRAME_XPATH = "/html/body/section/section/main/devsite-content/article/div[2]/article/devsite-iframe/iframe";
 
     @FindBy(xpath = "//div[@title='Compute Engine' and @class='hexagon']")
     WebElement computeEngineSection;
@@ -45,17 +44,14 @@ public class GoogleCloudPlatformPricingCalculatorPage extends AbstractPage {
     @FindBy(xpath = "//md-option[@id='select_option_80'and @value='regular']")
     WebElement regularFieldInDropDownMenu;
 
-
-    @FindBy(xpath = "//md-select[contains(@placeholder,'Series')]")
+    @FindBy(xpath = "//*[contains(text(),'Series')]/following-sibling::md-select")
     WebElement seriesDropDownMenu;
 
-    //md-select[@id='select_90']
     @FindBy(xpath = "//md-option[@id='select_option_191']")
     WebElement seriesN2InDropDownMenu;
 
-    @FindBy(xpath = "//md-select-value[@id='select_value_label_61']")
+    @FindBy(xpath = "//*[contains(text(),'Machine type')]/following-sibling::md-select")
     WebElement instanceTypeDropDown;
-
 
     @FindBy(xpath = "//iframe")
     private WebElement frame;
@@ -106,17 +102,16 @@ public class GoogleCloudPlatformPricingCalculatorPage extends AbstractPage {
     }
 
     public GoogleCloudPlatformPricingCalculatorPage selectSeries() {
-        while (vMClassDropDownMenu.getAttribute("aria-expanded").equalsIgnoreCase("false")) {
+        while (seriesDropDownMenu.getAttribute("aria-expanded").equalsIgnoreCase("false")) {
             new WebDriverWait(driver, 5).until(ExpectedConditions.visibilityOf(seriesDropDownMenu))
                     .click();
         }
-
-//        seriesN2InDropDownMenu.click();
+        seriesN2InDropDownMenu.click();
         return this;
     }
 
     public GoogleCloudPlatformPricingCalculatorPage selectInstance() {
-        while (vMClassDropDownMenu.getAttribute("aria-expanded").equalsIgnoreCase("false")) {
+        while (instanceTypeDropDown.getAttribute("aria-expanded").equalsIgnoreCase("false")) {
             new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(instanceTypeDropDown))
                     .click();
         }
@@ -124,9 +119,5 @@ public class GoogleCloudPlatformPricingCalculatorPage extends AbstractPage {
         return this;
     }
 
-    protected void webElementWaitToBeClickableAndClick(WebElement webElement) {
-        new WebDriverWait(driver, 10)
-                .until(elementToBeClickable(webElement)).click();
-    }
 
 }
