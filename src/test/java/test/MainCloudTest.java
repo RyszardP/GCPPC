@@ -25,22 +25,27 @@ public class MainCloudTest {
     }
 
     @Test(description = "Open google cloud page")
-    public void scenarioWithGoogleCloudTest() {
+    public void scenarioWithGoogleCloudTest() throws InterruptedException {
         new CloudGooglePage(this.driver)
                 .openPage("https://cloud.google.com/")
                 .typeInSearch(SEARCH_PHRASE)
                 .clickInSearchResult()
                 .clickOnEqualByText(SEARCH_PHRASE)
-             //   .clickOnComputeEngine()
+                //   .clickOnComputeEngine()
                 .typeNumberOfInstances(4)
-                .selectOSSoftware()        ;
+                .selectOSSoftware();
     }
 
     @Test(description = "Open google cloud pricing calculator page")
     public void scenarioWithGoogleCloudCalculatorTest() {
         new GoogleCloudPlatformPricingCalculatorPage(driver)
                 .openPage("https://cloud.google.com/products/calculator")
-                .typeNumberOfInstances(4);
+                .typeNumberOfInstances(4)
+                .selectOSSoftware()
+                .selectMachineClass()
+                .selectSeries()
+        //  .selectInstance()
+        ;
     }
 
 

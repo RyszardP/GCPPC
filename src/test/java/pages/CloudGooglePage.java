@@ -71,7 +71,6 @@ public class CloudGooglePage extends AbstractPage {
 
     public SearchResultPage clickInSearchResult() {
         new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(searchField));
-
         return new SearchResultPage(driver);
     }
 

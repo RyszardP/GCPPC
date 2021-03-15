@@ -36,11 +36,26 @@ public class GoogleCloudPlatformPricingCalculatorPage extends AbstractPage {
     @FindBy(xpath = "//md-select-value/span/div[contains(text(),'Free')]/../../..")
     WebElement operatingSystemDropMenu;
 
-    @FindBy(xpath = "//div[@class='md-text' and contains (text(),'Free')]")
-    WebElement operatingSystemDropMenuFirstItem;
+    @FindBy(xpath = "//md-option/div[contains(text(),'Free')]")
+    WebElement operatingFreeInSystemDropMenu;
 
-    @FindBy(xpath = "//input[@id='input-0']")
-    WebElement searchField;
+    @FindBy(xpath = "//md-select-value/span/div[contains(text(),'Regular')]/../../..")
+    WebElement vMClassDropDownMenu;
+
+    @FindBy(xpath = "//md-option[@id='select_option_80'and @value='regular']")
+    WebElement regularFieldInDropDownMenu;
+
+
+    @FindBy(xpath = "//md-select[contains(@placeholder,'Series')]")
+    WebElement seriesDropDownMenu;
+
+    //md-select[@id='select_90']
+    @FindBy(xpath = "//md-option[@id='select_option_191']")
+    WebElement seriesN2InDropDownMenu;
+
+    @FindBy(xpath = "//md-select-value[@id='select_value_label_61']")
+    WebElement instanceTypeDropDown;
+
 
     @FindBy(xpath = "//iframe")
     private WebElement frame;
@@ -72,30 +87,46 @@ public class GoogleCloudPlatformPricingCalculatorPage extends AbstractPage {
         return this;
     }
 
-   public GoogleCloudPlatformPricingCalculatorPage selectOSSoftware(){
-       while (operatingSystemDropMenu.getAttribute("aria-expanded" ).equalsIgnoreCase("false")){
-           new WebDriverWait(driver, 5).until(ExpectedConditions.visibilityOf(operatingSystemDropMenu))
-                   .click();
-       }
-       webElementWaitToBeClickableAndClick(operatingSystemDropMenuFirstItem);
-     //   operatingSystemDropMenuFirstItem.click();
+    public GoogleCloudPlatformPricingCalculatorPage selectOSSoftware() {
+        while (operatingSystemDropMenu.getAttribute("aria-expanded").equalsIgnoreCase("false")) {
+            new WebDriverWait(driver, 5).until(ExpectedConditions.visibilityOf(operatingSystemDropMenu))
+                    .click();
+        }
+        operatingFreeInSystemDropMenu.click();
         return this;
     }
 
-
-
-    public GoogleCloudPlatformPricingCalculatorPage typeToSearch(String text) {
-        new WebDriverWait(driver, 10).until(elementToBeClickable(frame));
-        driver.switchTo().frame(0);
-        new WebDriverWait(driver, 10);
-        driver.switchTo().frame(0);
-        searchField.sendKeys(text);
+    public GoogleCloudPlatformPricingCalculatorPage selectMachineClass() {
+        while (vMClassDropDownMenu.getAttribute("aria-expanded").equalsIgnoreCase("false")) {
+            new WebDriverWait(driver, 5).until(ExpectedConditions.visibilityOf(vMClassDropDownMenu))
+                    .click();
+        }
+        regularFieldInDropDownMenu.click();
         return this;
     }
 
-    protected void webElementWaitToBeClickableAndClick(WebElement clickableWebElement) {
-        new WebDriverWait(driver, 15)
-                .until(elementToBeClickable(clickableWebElement)).click();
+    public GoogleCloudPlatformPricingCalculatorPage selectSeries() {
+        while (vMClassDropDownMenu.getAttribute("aria-expanded").equalsIgnoreCase("false")) {
+            new WebDriverWait(driver, 5).until(ExpectedConditions.visibilityOf(seriesDropDownMenu))
+                    .click();
+        }
+
+//        seriesN2InDropDownMenu.click();
+        return this;
+    }
+
+    public GoogleCloudPlatformPricingCalculatorPage selectInstance() {
+        while (vMClassDropDownMenu.getAttribute("aria-expanded").equalsIgnoreCase("false")) {
+            new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(instanceTypeDropDown))
+                    .click();
+        }
+
+        return this;
+    }
+
+    protected void webElementWaitToBeClickableAndClick(WebElement webElement) {
+        new WebDriverWait(driver, 10)
+                .until(elementToBeClickable(webElement)).click();
     }
 
 }
