@@ -9,6 +9,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.CloudGooglePage;
 import pages.GoogleCloudPlatformPricingCalculatorPage;
+import org.testng.ITestResult;
 
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
@@ -40,21 +41,31 @@ public class MainCloudTest {
     public void scenarioWithGoogleCloudCalculatorTest() {
         new GoogleCloudPlatformPricingCalculatorPage(driver)
                 .openPage("https://cloud.google.com/products/calculator")
+                .selectComputeEngine()
                 .typeNumberOfInstances(4)
                 .selectOSSoftware()
                 .selectMachineClass()
                 .selectSeries()
                 .selectInstance()
+                .selectCheckBoxGPU(1, "NVIDIA Tesla V100")
+                .selectSSD("1x375 GB")
+                .selectLocation("Frankfurt (europe-west3)")
+                .selectCommittedUsage("1 Year")
+                .clickAddToEstimate()
+
         ;
     }
 
 
-    @Test(description = "try ope tab")
+    @Test(description = "try open tab")
     public void scenarioWithOpeningTab() throws IOException, UnsupportedFlavorException {
-        new CloudGooglePage(this.driver)
-                .openPage("https://cloud.google.com/")
-                .openNewTab("https://temp-mail.org/ru/")
-                .getTempMAilAddress();
+        new GoogleCloudPlatformPricingCalculatorPage(this.driver)
+                .openPage("https://cloud.google.com/products/calculator")
+                .selectComputeEngine()
+                .typeNumberOfInstances(4)
+                .selectCommittedUsage("1 Year")
+             .clickAddToEstimate()
+        ;
     }
 
     @Test(description = "try open tab")
@@ -72,9 +83,13 @@ public class MainCloudTest {
                 .openNewTabTempMailOrgTest("https://temp-mail.org/")
                 .getAddress();
     }
+
+
  /*   @AfterMethod(alwaysRun = true)
     public void afterTestCompleted() {
         driver.quit();
         driver = null;
     }*/
+
+
 }
