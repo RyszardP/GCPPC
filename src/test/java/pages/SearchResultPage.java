@@ -50,7 +50,7 @@ public class SearchResultPage extends AbstractPage {
         return new GoogleCloudPlatformPricingCalculatorPage(driver);
     }
 
-    public List<SearchResultItem> searchResultsItems() {
+  /*  public List<SearchResultItem> searchResultsItems() {
         return searchResultItemComponents().stream()
                 .map(SearchResultItemComponent::convertToSearchResultItem)
                 .collect(Collectors.toList());
@@ -66,7 +66,7 @@ public class SearchResultPage extends AbstractPage {
         return findElements((By) searchResultItem).stream()
                 .map(SearchResultItemComponent::new)
                 .collect(Collectors.toList());
-    }
+    }*/
 
 
 }

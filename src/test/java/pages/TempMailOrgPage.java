@@ -6,48 +6,62 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import util.CustomCondition;
+
 
 import java.util.concurrent.TimeUnit;
-import java.util.jar.Attributes;
-import java.util.regex.Pattern;
+
 
 public class TempMailOrgPage extends AbstractPage {
-    String regex = "^[A-Za-z0-9+_.-]+@(.+)$";
-    Pattern pattern = Pattern.compile(regex);
+    static String emailAddress;
 
 
     public TempMailOrgPage(WebDriver driver) {
         super(driver);
     }
 
-    @Override
+
     public TempMailOrgPage openPage(String url) {
-        new WebDriverWait(driver, 20).withMessage("javascript didn't load")
-                .until(CustomCondition.jQueryAJAXsCompleted());
+        driver.get(url);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         return this;
     }
 
     @FindBy(xpath = "//input[@id='mail']")
     WebElement mailField;
 
-    public TempMailOrgPage getAddress() throws InterruptedException {
-        //  String mail = mailField.getText();
-        // System.out.println(mail);
-        // Thread.sleep(5000);
-       /* new WebDriverWait(driver, 20).until(
-                webDriver -> ((JavascriptExecutor) webDriver).executeScript("return document.readyState").equals("complete"));*/
 
-       new WebDriverWait(driver, 10).until(ExpectedConditions.textToBePresentInElement(mailField, regex));
-     //  new WebDriverWait(driver, 10).until(ExpectedConditions.textMatches((By) mailField,pattern));
+    @FindBy(xpath = "//span[@class='inboxSubject' and contains(text(),'Google')]")
+    WebElement mailSubject;
 
-        //  new WebDriverWait(driver, 20);
 
-        System.out.println(mailField.getAttribute("value"));
-
+    public TempMailOrgPage getAddress() {
+        new WebDriverWait(driver, 20)
+                .until(ExpectedConditions
+                        .attributeContains(driver.findElement(By.id("mail")), "value", "@"));
+        emailAddress = driver.findElement(By.id("mail")).getAttribute("value");
+        // System.out.println(driver.findElement(By.id("mail")).getAttribute("value"));
         return this;
     }
+
+    public TempMailOrgPage switchTabToCalculate() {
+        driver.switchTo().window(GoogleCloudPlatformPricingCalculatorPage.tabs.get(0));
+        return this;
+    }
+
+    //*[@id="tm-body"]/main/div[1]/div/div[2]/div[2]/div/div[1]/div/div[4]/ul/li[2]/div[2]/span/a
+    //contains(text(),'Google')]
+
+
+    public TempMailOrgPage clickToMailWithSubject(String subject) {
+         new WebDriverWait(driver, 90).until(ExpectedConditions.elementToBeClickable
+                 (By.xpath("//span[contains(@class, 'inboxSubject') and contains(text(),'" + subject + "')]"))).click();
+
+      //  new WebDriverWait(driver, 20);
+     //  JavascriptExecutor js = (JavascriptExecutor) driver;
+      //  js.executeScript("arguments[0].scrollIntoView();", "//span[contains(@class, 'inboxSubject') and contains(text(),'" + subject + "')]");
+      //  mailSubject.click();
+        return this;
+    }
+
 }
