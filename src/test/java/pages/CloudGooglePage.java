@@ -1,7 +1,9 @@
 package pages;
 
+import model.GoogleCloudPageModel;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -25,13 +27,12 @@ public class CloudGooglePage extends AbstractPage {
 
     public CloudGooglePage(WebDriver driver) {
         super(driver);
+        PageFactory.initElements(this.driver, this);
     }
 
-
-    public CloudGooglePage openPage(String url) {
-        driver.get(url);
-        driver.manage().window().maximize();
-        new WebDriverWait(driver, 10);
+    @Override
+    public CloudGooglePage openPage() {
+        driver.navigate().to(CLOUD_URL);
         return this;
     }
 
@@ -44,21 +45,11 @@ public class CloudGooglePage extends AbstractPage {
         return this;
     }
 
-
-    public TempMailPage openNewTab(String url) {
-        ((JavascriptExecutor) driver).executeScript("window.open()");
-        ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
-        driver.switchTo().window(tabs.get(1));
-        driver.get(url);
-        return new TempMailPage(driver);
-    }
-
-    public TenMinutesMailPage openNewTabTenMinutes(String url) {
-        ((JavascriptExecutor) driver).executeScript("window.open()");
-        ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
-        driver.switchTo().window(tabs.get(1));
-        driver.get(url);
-        return new TenMinutesMailPage(driver);
+    public SearchResultPage typeInSearch(GoogleCloudPageModel cloudPageModel) {
+        new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(searchField));
+        searchField.sendKeys(cloudPageModel.getSearch());
+        searchField.sendKeys(Keys.ENTER);
+        return new SearchResultPage(driver);
     }
 
     public TempMailOrgPage openNewTabTempMailOrgTest(String url) {

@@ -2,6 +2,8 @@ package pages;
 
 import components.SearchResultItem;
 import components.SearchResultItemComponent;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -14,6 +16,8 @@ import java.util.stream.Collectors;
 
 public class SearchResultPage extends AbstractPage {
 
+    private final Logger logger = LogManager.getRootLogger();
+    private final String PAGE_URL = "https://cloud.google.com/s/results?q";
     static final String XPATH_TO_LINK = "//a[@class='gs-title']";
 
     private List<WebElement> findElements(By bySelector) {
@@ -30,11 +34,17 @@ public class SearchResultPage extends AbstractPage {
         super(driver);
     }
 
-
-    public SearchResultPage openPage(String url) {
-        driver.get(url);
-        driver.manage().window().maximize();
+    @Override
+    public SearchResultPage openPage() {
+        driver.navigate().to(PAGE_URL);
+        logger.info("Search page opened");
         return this;
+    }
+
+    public String getFirstResult(){
+        new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable((WebElement) foundResultsLocator));
+        List<WebElement> findElements = driver.findElements(By.xpath(XPATH_TO_LINK));
+        return String.valueOf(findElements.get(0));
     }
 
     public GoogleCloudPlatformPricingCalculatorPage clickOnEqualByText(String text) {
@@ -49,24 +59,6 @@ public class SearchResultPage extends AbstractPage {
         }
         return new GoogleCloudPlatformPricingCalculatorPage(driver);
     }
-
-  /*  public List<SearchResultItem> searchResultsItems() {
-        return searchResultItemComponents().stream()
-                .map(SearchResultItemComponent::convertToSearchResultItem)
-                .collect(Collectors.toList());
-    }
-
-    public List<SearchResultItem> searchResultsItemsWithText(String searchPhrase) {
-        return searchResultsItems().stream()
-                .filter(item -> item.getTitle().contains(searchPhrase) || item.getDescription().contains(searchPhrase))
-                .collect(Collectors.toList());
-    }
-
-    private List<SearchResultItemComponent> searchResultItemComponents() {
-        return findElements((By) searchResultItem).stream()
-                .map(SearchResultItemComponent::new)
-                .collect(Collectors.toList());
-    }*/
 
 
 }

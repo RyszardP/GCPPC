@@ -17,13 +17,16 @@ public class TempMailOrgPage extends AbstractPage {
     public static String emailAddress;
     public static Double estimatedMonthlyCostInEMail;
 
+    private final String PAGE_URL = "https://temp-mail.org/";
+
     public TempMailOrgPage(WebDriver driver) {
         super(driver);
     }
 
-    public TempMailOrgPage openPage(String url) {
-        driver.get(url);
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+    @Override
+    public TempMailOrgPage openPage() {
+        driver.navigate().to(PAGE_URL);
+
         return this;
     }
 

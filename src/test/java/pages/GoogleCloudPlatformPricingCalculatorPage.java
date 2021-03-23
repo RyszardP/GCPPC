@@ -8,6 +8,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.regex.Pattern;
@@ -19,6 +21,8 @@ public class GoogleCloudPlatformPricingCalculatorPage extends AbstractPage {
 
     public static ArrayList<String> tabs;
     public static Double estimatedMonthlyCostInGoogleCalculator;
+    private final Logger logger = LogManager.getRootLogger();
+    private final String PAGE_URL = "https://cloud.google.com/products/calculator";
 
     @FindBy(xpath = "//div[@title='Compute Engine' and @class='hexagon']/../../..")
     WebElement computeEngineButton;
@@ -90,9 +94,9 @@ public class GoogleCloudPlatformPricingCalculatorPage extends AbstractPage {
         PageFactory.initElements(this.driver, this);
     }
 
-    public GoogleCloudPlatformPricingCalculatorPage openPage(String url) {
-        driver.get(url);
-        driver.manage().window().maximize();
+    public GoogleCloudPlatformPricingCalculatorPage openPage() {
+        driver.get(PAGE_URL);
+        logger.info("Calculator page opened");
         return this;
     }
 
@@ -149,6 +153,7 @@ public class GoogleCloudPlatformPricingCalculatorPage extends AbstractPage {
             new WebDriverWait(driver, 5).until(visibilityOf(seriesDropDownMenu))
                     .click();
         }
+     //   ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", seriesDropDownMenu);
         driver.findElement(By.xpath("//div[contains(@class, 'md-active')]//md-option[contains(.,'" + series + "')]")).click();
         return this;
     }
@@ -158,6 +163,7 @@ public class GoogleCloudPlatformPricingCalculatorPage extends AbstractPage {
             new WebDriverWait(driver, 10).until(visibilityOf(instanceTypeDropDown))
                     .click();
         }
+    //    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", instanceTypeDropDown);
         driver.findElement(By.xpath("//div[contains(@class, 'md-active')]//md-option[contains(.,'" +
                 typeOfMachine + "')]")).click();
         return this;
@@ -192,6 +198,7 @@ public class GoogleCloudPlatformPricingCalculatorPage extends AbstractPage {
         while (locationDropDown.getAttribute("aria-expanded").equalsIgnoreCase("false")) {
             locationDropDown.click();
         }
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", locationDropDown);
         driver.findElement(By.xpath("//div[@aria-hidden = 'false']//div[contains(text(),'" +
                 location + "')]"))
                 .click();

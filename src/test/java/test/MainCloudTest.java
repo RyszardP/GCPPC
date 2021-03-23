@@ -28,7 +28,7 @@ public class MainCloudTest {
     private static final String SSD = "1x375 GB";
     private static final String LOCATION = "Frankfurt (europe-west3)";
     private static final String COMMITTED_USAGE = "1 Year";
-    WebDriver driver;
+   WebDriver driver;
 
     @BeforeMethod(alwaysRun = true)
     public void browserRun() {
@@ -39,7 +39,7 @@ public class MainCloudTest {
     @Test(description = "Open google cloud page")
     public void scenarioWithGoogleCloudTest() {
         GoogleCloudPlatformPricingCalculatorPage cloudGooglePage = new CloudGooglePage(driver)
-                .openPage("https://cloud.google.com/")
+                .openPage()
                 .typeInSearch(SEARCH_PHRASE)
                 .clickInSearchResult()
                 .clickOnEqualByText(SEARCH_PHRASE)
@@ -58,7 +58,7 @@ public class MainCloudTest {
                 .switchTab();
 
         TempMailOrgPage tempMailOrgPage = new TempMailOrgPage(driver)
-                .openPage("https://temp-mail.org/")
+                .openPage()
                 .getAddress()
                 .switchTabToCalculate();
     }
@@ -66,7 +66,7 @@ public class MainCloudTest {
     @Test(description = "Open google cloud pricing calculator page")
     public void scenarioWithGoogleCloudCalculatorTest() throws InterruptedException {
         GoogleCloudPlatformPricingCalculatorPage cloudGooglePage = new GoogleCloudPlatformPricingCalculatorPage(driver)
-                .openPage("https://cloud.google.com/products/calculator")
+                .openPage()
                 .selectComputeEngine()
                 .typeNumberOfInstances(NUMBER_OF_INSTANCES)
                 .selectOSSoftware(OPERATING_SYSTEM)
@@ -83,7 +83,7 @@ public class MainCloudTest {
 
 
         TempMailOrgPage tempMailOrgPage = new TempMailOrgPage(driver)
-                .openPage("https://temp-mail.org/")
+                .openPage()
                 .getAddress()
                 .switchTabToCalculate();
 
@@ -111,7 +111,7 @@ public class MainCloudTest {
     @Test(description = "try open tab")
     public void scenarioWithOpeningTab() throws IOException, UnsupportedFlavorException {
         new GoogleCloudPlatformPricingCalculatorPage(this.driver)
-                .openPage("https://cloud.google.com/products/calculator")
+                .openPage()
                 .selectComputeEngine()
                 .typeNumberOfInstances(4)
                 .selectCommittedUsage("1 Year")
@@ -119,18 +119,11 @@ public class MainCloudTest {
         ;
     }
 
-    @Test(description = "try open tab")
-    public void scenarioWithOpeningTabTenMinutesMAil() throws IOException, UnsupportedFlavorException {
-        new CloudGooglePage(this.driver)
-                .openPage("https://cloud.google.com/")
-                .openNewTabTenMinutes("https://10minutemail.com/")
-                .copyFieldWithEmail();
-    }
 
     @Test(description = "try open new tab")
     public void scenarioWithOpeningTabTempMail() {
         GoogleCloudPlatformPricingCalculatorPage cloudGooglePage = new GoogleCloudPlatformPricingCalculatorPage(driver)
-                .openPage("https://cloud.google.com/products/calculator")
+                .openPage()
                 .selectComputeEngine()
                 .typeNumberOfInstances(NUMBER_OF_INSTANCES)
                 .selectOSSoftware(OPERATING_SYSTEM)
