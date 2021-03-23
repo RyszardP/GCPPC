@@ -10,11 +10,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Pattern;
 
 
 public class TempMailOrgPage extends AbstractPage {
-    static String emailAddress;
-
+    public static String emailAddress;
+    public static Double estimatedMonthlyCostInEMail;
 
     public TempMailOrgPage(WebDriver driver) {
         super(driver);
@@ -33,6 +34,9 @@ public class TempMailOrgPage extends AbstractPage {
 
     @FindBy(xpath = "//span[@class='inboxSubject' and contains(text(),'Google')]")
     WebElement mailSubject;
+
+    @FindBy(xpath = "//h2[contains(text(),'Estimated')]")
+    WebElement estimatedMonthlyCost;
 
 
     public TempMailOrgPage getAddress() {
@@ -54,14 +58,24 @@ public class TempMailOrgPage extends AbstractPage {
 
 
     public TempMailOrgPage clickToMailWithSubject(String subject) {
-         new WebDriverWait(driver, 90).until(ExpectedConditions.elementToBeClickable
-                 (By.xpath("//span[contains(@class, 'inboxSubject') and contains(text(),'" + subject + "')]"))).click();
+        JavascriptExecutor jse = (JavascriptExecutor) driver;
+        jse.executeScript("window.scrollTo(0, document.body.scrollHeight)");
 
-      //  new WebDriverWait(driver, 20);
-     //  JavascriptExecutor js = (JavascriptExecutor) driver;
-      //  js.executeScript("arguments[0].scrollIntoView();", "//span[contains(@class, 'inboxSubject') and contains(text(),'" + subject + "')]");
-      //  mailSubject.click();
+        new WebDriverWait(driver, 90).until(ExpectedConditions.presenceOfElementLocated(By
+                .xpath("//a[contains(@class, 'viewLink title-subject') and contains(text(),'Google')]"))).click();
         return this;
     }
 
+
+    public TempMailOrgPage getEstimatedMonthlyCostInEmail() {
+        new WebDriverWait(driver, 10)
+                .until(ExpectedConditions
+                        .textMatches(By.xpath("//h2[contains(text(),'Estimated')]"), Pattern.compile("USD")));
+        String string = estimatedMonthlyCost
+                .getText()
+                .replaceAll("[^0-9.]", "");
+        estimatedMonthlyCostInEMail = Double.parseDouble(string);
+        System.out.println(estimatedMonthlyCostInEMail);
+        return this;
+    }
 }

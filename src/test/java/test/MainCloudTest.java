@@ -4,6 +4,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -63,7 +64,7 @@ public class MainCloudTest {
     }
 
     @Test(description = "Open google cloud pricing calculator page")
-    public void scenarioWithGoogleCloudCalculatorTest() {
+    public void scenarioWithGoogleCloudCalculatorTest() throws InterruptedException {
         GoogleCloudPlatformPricingCalculatorPage cloudGooglePage = new GoogleCloudPlatformPricingCalculatorPage(driver)
                 .openPage("https://cloud.google.com/products/calculator")
                 .selectComputeEngine()
@@ -78,9 +79,7 @@ public class MainCloudTest {
                 .selectCommittedUsage(COMMITTED_USAGE)
                 .clickAddToEstimate()
                 .createNewTab()
-                .switchTab()
-
-                ;
+                .switchTab();
 
 
         TempMailOrgPage tempMailOrgPage = new TempMailOrgPage(driver)
@@ -90,14 +89,21 @@ public class MainCloudTest {
 
         cloudGooglePage
                 .switchToFrameCalculator()
-                .emailEstimate()
+                .clickToEmailEstimate()
                 .sendEmail()
                 .switchTab();
 
         tempMailOrgPage
-                .clickToMailWithSubject("Google Cloud Platform Price Estimate");
 
+                .clickToMailWithSubject("Google Cloud Platform Price Estimate")
+                .getEstimatedMonthlyCostInEmail()
+                .switchTabToCalculate() ;
 
+        cloudGooglePage
+                .getEstimatedCost();
+
+        Assert.assertEquals(GoogleCloudPlatformPricingCalculatorPage.estimatedMonthlyCostInGoogleCalculator,
+                TempMailOrgPage.estimatedMonthlyCostInEMail);
     }
 
 
@@ -122,10 +128,21 @@ public class MainCloudTest {
 
     @Test(description = "try open new tab")
     public void scenarioWithOpeningTabTempMail() throws InterruptedException {
-        new CloudGooglePage(this.driver)
-                .openPage("https://cloud.google.com/")
-                .openNewTabTempMailOrgTest("https://temp-mail.org/")
-                .getAddress();
+        GoogleCloudPlatformPricingCalculatorPage cloudGooglePage = new GoogleCloudPlatformPricingCalculatorPage(driver)
+                .openPage("https://cloud.google.com/products/calculator")
+                .selectComputeEngine()
+                .typeNumberOfInstances(NUMBER_OF_INSTANCES)
+                .selectOSSoftware(OPERATING_SYSTEM)
+                .selectMachineClass(MACHINE_ClASS)
+                .selectSeries(SERIES)
+                .selectInstance(INSTANCE_TYPE)
+                .selectCheckBoxGPU(NUMBER_OF_GPU, GPU_TYPE)
+                .selectSSD(SSD)
+                .selectLocation(LOCATION)
+                .selectCommittedUsage(COMMITTED_USAGE)
+                .clickAddToEstimate()
+                .getEstimatedCost()
+                ;
     }
 
 
