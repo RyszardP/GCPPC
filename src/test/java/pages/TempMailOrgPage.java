@@ -21,7 +21,6 @@ public class TempMailOrgPage extends AbstractPage {
         super(driver);
     }
 
-
     public TempMailOrgPage openPage(String url) {
         driver.get(url);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -30,7 +29,6 @@ public class TempMailOrgPage extends AbstractPage {
 
     @FindBy(xpath = "//input[@id='mail']")
     WebElement mailField;
-
 
     @FindBy(xpath = "//span[@class='inboxSubject' and contains(text(),'Google')]")
     WebElement mailSubject;
@@ -44,7 +42,6 @@ public class TempMailOrgPage extends AbstractPage {
                 .until(ExpectedConditions
                         .attributeContains(driver.findElement(By.id("mail")), "value", "@"));
         emailAddress = driver.findElement(By.id("mail")).getAttribute("value");
-        // System.out.println(driver.findElement(By.id("mail")).getAttribute("value"));
         return this;
     }
 
@@ -52,10 +49,6 @@ public class TempMailOrgPage extends AbstractPage {
         driver.switchTo().window(GoogleCloudPlatformPricingCalculatorPage.tabs.get(0));
         return this;
     }
-
-    //*[@id="tm-body"]/main/div[1]/div/div[2]/div[2]/div/div[1]/div/div[4]/ul/li[2]/div[2]/span/a
-    //contains(text(),'Google')]
-
 
     public TempMailOrgPage clickToMailWithSubject(String subject) {
         JavascriptExecutor jse = (JavascriptExecutor) driver;
@@ -75,7 +68,6 @@ public class TempMailOrgPage extends AbstractPage {
                 .getText()
                 .replaceAll("[^0-9.]", "");
         estimatedMonthlyCostInEMail = Double.parseDouble(string);
-        System.out.println(estimatedMonthlyCostInEMail);
         return this;
     }
 }

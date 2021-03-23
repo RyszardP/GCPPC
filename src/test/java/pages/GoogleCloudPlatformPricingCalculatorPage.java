@@ -78,7 +78,7 @@ public class GoogleCloudPlatformPricingCalculatorPage extends AbstractPage {
     @FindBy(xpath = "//button[@aria-label='Send Email'] [not(contains(@disabled,'disabled'))]")
     WebElement sendEmailButtonInEstimate;
 
-    @FindBy(xpath = "//md-card-content[@id='resultBlock']//div/b[contains(text(),Total)]")
+    @FindBy(xpath = "//b[contains(@class,'ng-binding')and contains(text(),'Total')]")
     WebElement totalEstimatedCostInCalculator;
 
     @FindBy(xpath = "//iframe")
@@ -190,7 +190,6 @@ public class GoogleCloudPlatformPricingCalculatorPage extends AbstractPage {
 
     public GoogleCloudPlatformPricingCalculatorPage selectLocation(String location) {
         while (locationDropDown.getAttribute("aria-expanded").equalsIgnoreCase("false")) {
-            // new WebDriverWait(driver, 5).until(ExpectedConditions.visibilityOf(locationDropDown))
             locationDropDown.click();
         }
         driver.findElement(By.xpath("//div[@aria-hidden = 'false']//div[contains(text(),'" +
@@ -210,13 +209,7 @@ public class GoogleCloudPlatformPricingCalculatorPage extends AbstractPage {
 
 
     public GoogleCloudPlatformPricingCalculatorPage clickAddToEstimate() {
-        //  new WebDriverWait(driver, 15)
-        //       .until(ExpectedConditions.elementToBeClickable(addToEstimateButton)).click();
-
-
         addToEstimateButton.submit();
-
-        //  addToEstimateButton.click();
         return this;
     }
 
@@ -236,32 +229,24 @@ public class GoogleCloudPlatformPricingCalculatorPage extends AbstractPage {
         driver.switchTo().frame(0);
         new WebDriverWait(driver, 15);
         driver.switchTo().frame(0);
-        System.out.println("PricingCalculatorPage page opened");
         return this;
     }
 
     public GoogleCloudPlatformPricingCalculatorPage clickToEmailEstimate() {
         new WebDriverWait(driver, 15)
                 .until(ExpectedConditions.elementToBeClickable(emailEstimateButton)).click();
-
-//        emailEstimateButton.click();
         return this;
     }
 
     public GoogleCloudPlatformPricingCalculatorPage sendEmail() {
-        //  driver.switchTo().frame(0);
         new WebDriverWait(driver, 15).until(visibilityOf(
                 emailFieldInEstimate)).sendKeys(TempMailOrgPage.emailAddress);
-        System.out.println(TempMailOrgPage.emailAddress);
-        // emailFieldInEstimate.sendKeys(TempMailOrgPage.emailAddress);
         new WebDriverWait(driver, 15)
                 .until(ExpectedConditions.elementToBeClickable(sendEmailButtonInEstimate)).click();
         return this;
     }
 
-    public GoogleCloudPlatformPricingCalculatorPage getEstimatedCost() throws InterruptedException {
-        driver.switchTo().frame(0);
-
+    public GoogleCloudPlatformPricingCalculatorPage getEstimatedCost() {
         new WebDriverWait(driver, 15)
                 .until(ExpectedConditions
                         .textMatches(By.xpath("//md-card-content[@id='resultBlock']//div/b[contains(text(),Total)]"),
@@ -271,9 +256,11 @@ public class GoogleCloudPlatformPricingCalculatorPage extends AbstractPage {
                 .replace("1 month", "")
                 .replaceAll("[^0-9.]", "");
         estimatedMonthlyCostInGoogleCalculator = Double.parseDouble(string);
-        System.out.println(estimatedMonthlyCostInGoogleCalculator);
         return this;
     }
 
-
+    public GoogleCloudPlatformPricingCalculatorPage getEstimatedCostString() {
+        new WebDriverWait(driver, 15).until(ExpectedConditions.visibilityOf(totalEstimatedCostInCalculator));
+        return this;
+    }
 }

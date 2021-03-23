@@ -97,9 +97,10 @@ public class MainCloudTest {
 
                 .clickToMailWithSubject("Google Cloud Platform Price Estimate")
                 .getEstimatedMonthlyCostInEmail()
-                .switchTabToCalculate() ;
+                .switchTabToCalculate();
 
         cloudGooglePage
+                .switchToFrameCalculator()
                 .getEstimatedCost();
 
         Assert.assertEquals(GoogleCloudPlatformPricingCalculatorPage.estimatedMonthlyCostInGoogleCalculator,
@@ -127,7 +128,7 @@ public class MainCloudTest {
     }
 
     @Test(description = "try open new tab")
-    public void scenarioWithOpeningTabTempMail() throws InterruptedException {
+    public void scenarioWithOpeningTabTempMail() {
         GoogleCloudPlatformPricingCalculatorPage cloudGooglePage = new GoogleCloudPlatformPricingCalculatorPage(driver)
                 .openPage("https://cloud.google.com/products/calculator")
                 .selectComputeEngine()
@@ -141,8 +142,8 @@ public class MainCloudTest {
                 .selectLocation(LOCATION)
                 .selectCommittedUsage(COMMITTED_USAGE)
                 .clickAddToEstimate()
-                .getEstimatedCost()
-                ;
+                .getEstimatedCostString()
+                .getEstimatedCost();
     }
 
 
