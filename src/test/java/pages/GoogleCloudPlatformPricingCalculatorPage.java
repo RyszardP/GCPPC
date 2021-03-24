@@ -1,5 +1,6 @@
 package pages;
 
+import model.CalculationPageModel;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -129,6 +130,11 @@ public class GoogleCloudPlatformPricingCalculatorPage extends AbstractPage {
         return this;
     }
 
+    public GoogleCloudPlatformPricingCalculatorPage typeNumberOfInstances(CalculationPageModel pageModel) {
+        numberOfInstancesField.sendKeys(pageModel.getNumberOfInstances());
+        return this;
+    }
+
     public GoogleCloudPlatformPricingCalculatorPage selectOSSoftware(String oS) {
         while (operatingSystemDropMenu.getAttribute("aria-expanded").equalsIgnoreCase("false")) {
             new WebDriverWait(driver, 10).until(visibilityOf(operatingSystemDropMenu))
@@ -153,7 +159,7 @@ public class GoogleCloudPlatformPricingCalculatorPage extends AbstractPage {
             new WebDriverWait(driver, 5).until(visibilityOf(seriesDropDownMenu))
                     .click();
         }
-     //   ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", seriesDropDownMenu);
+        //   ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", seriesDropDownMenu);
         driver.findElement(By.xpath("//div[contains(@class, 'md-active')]//md-option[contains(.,'" + series + "')]")).click();
         return this;
     }
@@ -163,7 +169,7 @@ public class GoogleCloudPlatformPricingCalculatorPage extends AbstractPage {
             new WebDriverWait(driver, 10).until(visibilityOf(instanceTypeDropDown))
                     .click();
         }
-    //    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", instanceTypeDropDown);
+        //    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", instanceTypeDropDown);
         driver.findElement(By.xpath("//div[contains(@class, 'md-active')]//md-option[contains(.,'" +
                 typeOfMachine + "')]")).click();
         return this;

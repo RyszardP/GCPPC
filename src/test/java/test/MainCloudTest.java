@@ -42,7 +42,7 @@ public class MainCloudTest {
                 .openPage()
                 .typeInSearch(SEARCH_PHRASE)
                 .clickInSearchResult()
-                .clickOnEqualByText(SEARCH_PHRASE)
+                .clickOnFirstResult()
                 .selectComputeEngine()
                 .typeNumberOfInstances(NUMBER_OF_INSTANCES)
                 .selectOSSoftware(OPERATING_SYSTEM)
@@ -64,7 +64,7 @@ public class MainCloudTest {
     }
 
     @Test(description = "Open google cloud pricing calculator page")
-    public void scenarioWithGoogleCloudCalculatorTest() throws InterruptedException {
+    public void scenarioWithGoogleCloudCalculatorTest() {
         GoogleCloudPlatformPricingCalculatorPage cloudGooglePage = new GoogleCloudPlatformPricingCalculatorPage(driver)
                 .openPage()
                 .selectComputeEngine()

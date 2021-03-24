@@ -1,6 +1,9 @@
 package pages;
 
 import model.GoogleCloudPageModel;
+import model.User;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -15,6 +18,7 @@ public class CloudGooglePage extends AbstractPage {
     final private String CLOUD_URL = "https://cloud.google.com/";
     final private String CALCULATOR_LINK = "Google Cloud Platform Pricing Calculator";
     private String searchTextLink;
+    private final Logger logger = LogManager.getRootLogger();
 
     @FindBy(xpath = "//input[@name='q']")
     private WebElement searchField;
@@ -33,6 +37,7 @@ public class CloudGooglePage extends AbstractPage {
     @Override
     public CloudGooglePage openPage() {
         driver.navigate().to(CLOUD_URL);
+        logger.info("Login page opened");
         return this;
     }
 
@@ -52,6 +57,13 @@ public class CloudGooglePage extends AbstractPage {
         return new SearchResultPage(driver);
     }
 
+    public SearchResultPage typeInSearch(User user) {
+        new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(searchField));
+        searchField.sendKeys(user.getSearch());
+        searchField.sendKeys(Keys.ENTER);
+        return new SearchResultPage(this.driver);
+    }
+
     public TempMailOrgPage openNewTabTempMailOrgTest(String url) {
         ((JavascriptExecutor) driver).executeScript("window.open()");
         ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
@@ -62,7 +74,7 @@ public class CloudGooglePage extends AbstractPage {
 
     public SearchResultPage clickInSearchResult() {
         new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(searchField));
-        return new SearchResultPage(driver);
+        return new SearchResultPage(this.driver);
     }
 
 

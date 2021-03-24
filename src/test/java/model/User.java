@@ -6,11 +6,17 @@ public class User {
 
     private String username;
     private String password;
+    private String search;
 
 
-    public User(String username, String password) {
+    public User(String username, String password, String search) {
         this.username = username;
         this.password = password;
+        this.search = search;
+    }
+
+    public User(String search) {
+        this.search = search;
     }
 
     public String getUsername() {
@@ -29,26 +35,20 @@ public class User {
         this.password = password;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(getUsername(), user.getUsername()) &&
-                Objects.equals(getPassword(), user.getPassword());
+    public String getSearch() {
+        return search;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(username, password);
+    public void setSearch(String search) {
+        this.search = search;
     }
 
     @Override
     public String toString() {
-        return
-                "User{" +
-                        "username='" + username + '\'' +
-                        ", password='" + password + '\'' +
-                        '}';
+        return "User{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", search='" + search + '\'' +
+                '}';
     }
 }

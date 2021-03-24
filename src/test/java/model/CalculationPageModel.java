@@ -3,7 +3,7 @@ package model;
 import java.util.Objects;
 
 public class CalculationPageModel {
-    private int numberOfInstances;
+    private String numberOfInstances;
     private String operationSystem;
     private String machineClass;
     private String series;
@@ -14,7 +14,16 @@ public class CalculationPageModel {
     private String location;
     private String committedUsage;
 
-    public CalculationPageModel(int numberOfInstances, String operationSystem, String machineClass, String series,
+    public CalculationPageModel(String numberOfInstances) {
+        this.numberOfInstances = numberOfInstances;
+    }
+
+    public CalculationPageModel(String numberOfInstances, String operationSystem) {
+        this.numberOfInstances = numberOfInstances;
+        this.operationSystem = operationSystem;
+    }
+
+    public CalculationPageModel(String numberOfInstances, String operationSystem, String machineClass, String series,
                                 String instanceType, int numberOfGPU, String gpuType, String ssd, String location,
                                 String committedUsage) {
         this.numberOfInstances = numberOfInstances;
@@ -29,11 +38,11 @@ public class CalculationPageModel {
         this.committedUsage = committedUsage;
     }
 
-    public int getNumberOfInstances() {
+    public String getNumberOfInstances() {
         return numberOfInstances;
     }
 
-    public void setNumberOfInstances(int numberOfInstances) {
+    public void setNumberOfInstances(String numberOfInstances) {
         this.numberOfInstances = numberOfInstances;
     }
 

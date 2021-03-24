@@ -2,6 +2,8 @@ package pages;
 
 import components.SearchResultItem;
 import components.SearchResultItemComponent;
+import model.GoogleCloudPageModel;
+import model.SearchResultPageModel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
@@ -41,14 +43,15 @@ public class SearchResultPage extends AbstractPage {
         return this;
     }
 
-    public String getFirstResult(){
+    public SearchResultPage getFirstResult(SearchResultPageModel resultPageModel) {
         new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable((WebElement) foundResultsLocator));
         List<WebElement> findElements = driver.findElements(By.xpath(XPATH_TO_LINK));
-        return String.valueOf(findElements.get(0));
+        logger.info("Search performed");
+        return new SearchResultPage(driver);
     }
 
     public GoogleCloudPlatformPricingCalculatorPage clickOnEqualByText(String text) {
-        new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable((WebElement) foundResultsLocator));
+        new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(foundResultsLocator));
         List<WebElement> findElements = driver.findElements(By.xpath(XPATH_TO_LINK));
 
         for (int i = 0; i < findElements.size(); i++) {
@@ -60,5 +63,13 @@ public class SearchResultPage extends AbstractPage {
         return new GoogleCloudPlatformPricingCalculatorPage(driver);
     }
 
+    public GoogleCloudPlatformPricingCalculatorPage clickOnFirstResult() {
+        new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@class='gs-title'][1]")));
+        WebElement findElement = driver.findElement(By.xpath("//a[@class='gs-title'][1]"));
+        logger.info("Search performed");
 
+                findElement.click();
+
+        return new GoogleCloudPlatformPricingCalculatorPage(driver);
+    }
 }

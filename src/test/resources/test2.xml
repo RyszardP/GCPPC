@@ -1,9 +1,9 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
 <suite name="Tests" verbose="1" >
-    <test name="Test with utils" >
+    <test name="Test with user utils" >
         <classes>
-            <class name="test.CloudsWithUtilsTest" />
+            <class name="test.UserSearchTest" />
         </classes>
     </test>
 </suite>
