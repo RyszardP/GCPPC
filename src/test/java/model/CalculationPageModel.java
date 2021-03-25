@@ -8,7 +8,7 @@ public class CalculationPageModel {
     private String machineClass;
     private String series;
     private String instanceType;
-    private int numberOfGPU;
+    private String numberOfGPU;
     private String gpuType;
     private String ssd;
     private String location;
@@ -23,8 +23,14 @@ public class CalculationPageModel {
         this.operationSystem = operationSystem;
     }
 
+    public CalculationPageModel(String numberOfInstances, String operationSystem, String machineClass) {
+        this.numberOfInstances = numberOfInstances;
+        this.operationSystem = operationSystem;
+        this.machineClass = machineClass;
+    }
+
     public CalculationPageModel(String numberOfInstances, String operationSystem, String machineClass, String series,
-                                String instanceType, int numberOfGPU, String gpuType, String ssd, String location,
+                                String instanceType, String numberOfGPU, String gpuType, String ssd, String location,
                                 String committedUsage) {
         this.numberOfInstances = numberOfInstances;
         this.operationSystem = operationSystem;
@@ -78,11 +84,11 @@ public class CalculationPageModel {
         this.instanceType = instanceType;
     }
 
-    public int getNumberOfGPU() {
+    public String getNumberOfGPU() {
         return numberOfGPU;
     }
 
-    public void setNumberOfGPU(int numberOfGPU) {
+    public void setNumberOfGPU(String numberOfGPU) {
         this.numberOfGPU = numberOfGPU;
     }
 

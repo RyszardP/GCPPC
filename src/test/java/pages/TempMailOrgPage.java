@@ -26,7 +26,6 @@ public class TempMailOrgPage extends AbstractPage {
     @Override
     public TempMailOrgPage openPage() {
         driver.navigate().to(PAGE_URL);
-
         return this;
     }
 
