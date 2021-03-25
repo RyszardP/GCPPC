@@ -94,8 +94,7 @@ public class MainCloudTest {
                 .switchTab();
 
         tempMailOrgPage
-
-                .clickToMailWithSubject("Google Cloud Platform Price Estimate")
+                .clickToMailWithSubject()
                 .getEstimatedMonthlyCostInEmail()
                 .switchTabToCalculate();
 

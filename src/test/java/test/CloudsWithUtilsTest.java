@@ -1,18 +1,9 @@
 package test;
 
-import model.CalculationPageModel;
-import model.GoogleCloudPageModel;
-import model.SearchResultPageModel;
-import model.TempMailIoPageModel;
+import model.*;
 import org.testng.annotations.Test;
-import pages.CloudGooglePage;
-import pages.GoogleCloudPlatformPricingCalculatorPage;
-import pages.SearchResultPage;
-import pages.TempMailIoPage;
-import service.CalculationPageCreator;
-import service.GoogleCloudPageCreator;
-import service.SearchResultPageCreator;
-import service.TempMailIoPageCreator;
+import pages.*;
+import service.*;
 import test.CommonConditions;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -26,6 +17,7 @@ public class CloudsWithUtilsTest extends CommonConditions {
         GoogleCloudPageModel cloudPageModel = GoogleCloudPageCreator.withSearchFromProperty();
         CalculationPageModel calculatorPage = CalculationPageCreator.withCredentialsFromProperty();
         TempMailIoPageModel mailIoPageModel = TempMailIoPageCreator.withResultFromProperty();
+        TenMinutesPageModel tenMinutesPageModel = TenMinutesPageCreator.withResultFromProperty();
         GoogleCloudPlatformPricingCalculatorPage googlePage = new CloudGooglePage(driver)
                 .openPage()
                 .typeInSearch(cloudPageModel)
@@ -45,10 +37,24 @@ public class CloudsWithUtilsTest extends CommonConditions {
                 .createNewTab()
                 .switchTab();
 
-        TempMailIoPage tempMailIoPage = new TempMailIoPage(driver)
+        TenMinutesPage tenMinutesPage = new TenMinutesPage(driver)
                 .openPage()
-                .getAddress(mailIoPageModel);
+                .getAddress(tenMinutesPageModel)
+                .switchTabToCalculate();
 
+        googlePage
+                .switchToFrameCalculator()
+                .sendTenMinutesEmail(tenMinutesPageModel)
+                .switchTab();
+
+        tenMinutesPage
+                .clickToMailWithSubject()
+                .getEstimatedMonthlyCostInEmail(tenMinutesPageModel)
+                .switchTabToCalculate();
+
+        googlePage
+                .switchToFrameCalculator()
+                .getEstimatedCost();
         //     .clickOnFirstResult(calculatorPage);
         //    .selectComputeEngine();
 

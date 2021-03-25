@@ -8,15 +8,12 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-
-import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
 
 public class TempMailOrgPage extends AbstractPage {
     public static String emailAddress;
     public static Double estimatedMonthlyCostInEMail;
-
     private final String PAGE_URL = "https://temp-mail.org/";
 
     public TempMailOrgPage(WebDriver driver) {
@@ -52,7 +49,7 @@ public class TempMailOrgPage extends AbstractPage {
         return this;
     }
 
-    public TempMailOrgPage clickToMailWithSubject(String subject) {
+    public TempMailOrgPage clickToMailWithSubject() {
         JavascriptExecutor jse = (JavascriptExecutor) driver;
         jse.executeScript("window.scrollTo(0, document.body.scrollHeight)");
 

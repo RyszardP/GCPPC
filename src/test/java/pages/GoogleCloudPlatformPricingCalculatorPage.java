@@ -1,6 +1,7 @@
 package pages;
 
 import model.CalculationPageModel;
+import model.TenMinutesPageModel;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -132,6 +133,7 @@ public class GoogleCloudPlatformPricingCalculatorPage extends AbstractPage {
 
     public GoogleCloudPlatformPricingCalculatorPage typeNumberOfInstancesWithUtil(CalculationPageModel pageModel) {
         numberOfInstancesField.sendKeys(pageModel.getNumberOfInstances());
+        logger.info("Type instances number");
         return this;
     }
 
@@ -341,6 +343,16 @@ public class GoogleCloudPlatformPricingCalculatorPage extends AbstractPage {
     public GoogleCloudPlatformPricingCalculatorPage sendEmail() {
         new WebDriverWait(driver, 15).until(visibilityOf(
                 emailFieldInEstimate)).sendKeys(TempMailOrgPage.emailAddress);
+
+        new WebDriverWait(driver, 15)
+                .until(ExpectedConditions.elementToBeClickable(sendEmailButtonInEstimate)).click();
+        return this;
+    }
+
+    public GoogleCloudPlatformPricingCalculatorPage sendTenMinutesEmail(TenMinutesPageModel pageModel) {
+        new WebDriverWait(driver, 15).until(visibilityOf(
+                emailFieldInEstimate)).sendKeys(pageModel.getEmailAddress());
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", locationDropDown);
         new WebDriverWait(driver, 15)
                 .until(ExpectedConditions.elementToBeClickable(sendEmailButtonInEstimate)).click();
         return this;
