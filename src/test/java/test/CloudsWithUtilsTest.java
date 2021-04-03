@@ -43,8 +43,9 @@ public class CloudsWithUtilsTest extends CommonConditions {
                 .switchTabToCalculate();
 
         googlePage
-                .switchToFrameCalculator()
-                .sendTenMinutesEmail(tenMinutesPageModel)
+               .switchToFrameCalculator()
+                .inputTenMinutesEmailInEstimate(tenMinutesPageModel)
+                .clickSendEmailButton()
                 .switchTab();
 
         tenMinutesPage
@@ -55,8 +56,7 @@ public class CloudsWithUtilsTest extends CommonConditions {
         googlePage
                 .switchToFrameCalculator()
                 .getEstimatedCost();
-        //     .clickOnFirstResult(calculatorPage);
-        //    .selectComputeEngine();
+
 
 
     }

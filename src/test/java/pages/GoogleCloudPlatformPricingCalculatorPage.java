@@ -81,8 +81,11 @@ public class GoogleCloudPlatformPricingCalculatorPage extends AbstractPage {
     @FindBy(xpath = "//input[@type='email']")
     WebElement emailFieldInEstimate;
 
-    @FindBy(xpath = "//button[@aria-label='Send Email'] [not(contains(@disabled,'disabled'))]")
+    @FindBy(xpath = "//button[@aria-label='Send Email'][not(contains(@disabled,'disabled'))]")
     WebElement sendEmailButtonInEstimate;
+
+    @FindBy(xpath = "//button[contains(text(),'Send Email')]")
+    private WebElement sendEmailInputButton;
 
     @FindBy(xpath = "//b[contains(@class,'ng-binding')and contains(text(),'Total')]")
     WebElement totalEstimatedCostInCalculator;
@@ -262,7 +265,7 @@ public class GoogleCloudPlatformPricingCalculatorPage extends AbstractPage {
             new WebDriverWait(driver, 5).until(visibilityOf(localSSDDropDown))
                     .click();
         }
-     //   ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", localSSDDropDown);
+        //   ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", localSSDDropDown);
         driver.findElement(By.xpath("//md-option/div[contains(text(),'" + pageModel.getSsd() + "')]")).click();
         return this;
     }
@@ -295,6 +298,7 @@ public class GoogleCloudPlatformPricingCalculatorPage extends AbstractPage {
             new WebDriverWait(driver, 5).until(visibilityOf(committedUsageDropDown))
                     .click();
         }
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", committedUsageDropDown);
         driver.findElement(By.xpath("//div[contains(@class,'md-active')]//div[contains(text(), '" + usage + "')]")).click();
         return this;
     }
@@ -349,12 +353,17 @@ public class GoogleCloudPlatformPricingCalculatorPage extends AbstractPage {
         return this;
     }
 
-    public GoogleCloudPlatformPricingCalculatorPage sendTenMinutesEmail(TenMinutesPageModel pageModel) {
-        new WebDriverWait(driver, 15).until(visibilityOf(
-                emailFieldInEstimate)).sendKeys(pageModel.getEmailAddress());
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", locationDropDown);
+    public GoogleCloudPlatformPricingCalculatorPage inputTenMinutesEmailInEstimate(TenMinutesPageModel pageModel) {
+      //  driver.switchTo().defaultContent();
+      //  ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", emailFieldInEstimate);
+        new WebDriverWait(driver, 15).until(visibilityOf(emailFieldInEstimate))
+                .sendKeys(pageModel.getEmailAddress());
+        return this;
+    }
+
+    public GoogleCloudPlatformPricingCalculatorPage clickSendEmailButton() {
         new WebDriverWait(driver, 15)
-                .until(ExpectedConditions.elementToBeClickable(sendEmailButtonInEstimate)).click();
+                .until(ExpectedConditions.elementToBeClickable(sendEmailInputButton)).click();
         return this;
     }
 

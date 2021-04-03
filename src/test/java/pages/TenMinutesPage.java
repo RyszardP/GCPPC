@@ -59,7 +59,8 @@ public class TenMinutesPage extends AbstractPage {
     }
 
     public TenMinutesPage getEstimatedMonthlyCostInEmail(TenMinutesPageModel pageModel) {
-        new WebDriverWait(driver, 10)
+
+        new WebDriverWait(driver, 20)
                 .until(ExpectedConditions
                         .textMatches(By.xpath("//h2[contains(text(),'Estimated')]"), Pattern.compile("USD")));
         String string = estimatedMonthlyCost
@@ -67,7 +68,9 @@ public class TenMinutesPage extends AbstractPage {
                 .replaceAll("[^0-9.]", "");
 
         estimatedMonthlyCostInEMail = Double.parseDouble(string);
+        System.out.println(estimatedMonthlyCost);
         pageModel.setEstimatedMonthlyCost(String.valueOf(estimatedMonthlyCost));
+
         return this;
     }
 
