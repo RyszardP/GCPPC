@@ -16,7 +16,6 @@ public class CloudsWithUtilsTest extends CommonConditions {
     public void openCloudPage() {
         GoogleCloudPageModel cloudPageModel = GoogleCloudPageCreator.withSearchFromProperty();
         CalculationPageModel calculatorPage = CalculationPageCreator.withCredentialsFromProperty();
-        TempMailIoPageModel mailIoPageModel = TempMailIoPageCreator.withResultFromProperty();
         TenMinutesPageModel tenMinutesPageModel = TenMinutesPageCreator.withResultFromProperty();
         GoogleCloudPlatformPricingCalculatorPage googlePage = new CloudGooglePage(driver)
                 .openPage()
@@ -50,7 +49,8 @@ public class CloudsWithUtilsTest extends CommonConditions {
 
         tenMinutesPage
                 .clickToMailWithSubject()
-                .getEstimatedMonthlyCostInEmail(tenMinutesPageModel)
+             //   .getEstimatedMonthlyCostInEmail(tenMinutesPageModel)
+                .getMessageFromTemporaryEmailService(tenMinutesPageModel)
                 .switchTabToCalculate();
 
         googlePage

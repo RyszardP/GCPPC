@@ -137,6 +137,7 @@ public class GoogleCloudPlatformPricingCalculatorPage extends AbstractPage {
     public GoogleCloudPlatformPricingCalculatorPage typeNumberOfInstancesWithUtil(CalculationPageModel pageModel) {
         numberOfInstancesField.sendKeys(pageModel.getNumberOfInstances());
         logger.info("Type instances number");
+        logger.warn("Type instances number");
         return this;
     }
 

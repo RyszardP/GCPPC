@@ -6,16 +6,16 @@
                 <Pattern>%d %p %c{2} [%t] %1 %m%n</Pattern>
             </PatternLayout>
         </Console>
-        <File name="File" fileName="target/logs/test-logs.log">
+        <File name="File" fileName="target/logs/test-logs.log" filePattern="${basePath}/app-info-%d{yyyy-MM-dd}.log">
             <PatternLayout>
                 <Pattern>%d %p %c{2} [%t] %m%n</Pattern>
             </PatternLayout>
         </File>
     </Appenders>
     <Loggers>
-        <Root level="error" additivity="false">
-            <AppenderRef ref="Console" level="info"/>
-            <AppenderRef ref="File" level="error"/>
+        <Root level="error">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="File"/>
         </Root>
     </Loggers>
 </Configuration>

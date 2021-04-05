@@ -13,7 +13,6 @@ public class CommonConditions {
 
     protected WebDriver driver;
 
-
     @BeforeMethod()
     public void setUp()
     {
