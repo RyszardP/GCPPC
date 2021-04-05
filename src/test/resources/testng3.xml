@@ -3,7 +3,6 @@
 <suite name="Tests" verbose="1" >
     <test name="Test with utils" >
         <classes>
-            <class name="test.CloudsWithUtilsTest" />
             <class name="test.CloudWithTempMailoTest" />
         </classes>
     </test>

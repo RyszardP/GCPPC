@@ -47,6 +47,7 @@ public class CloudGooglePage extends AbstractPage {
         searchButton.click();
         searchField.sendKeys(string);
         searchField.sendKeys(Keys.ENTER);
+        logger.info("Type search");
         return this;
     }
 
@@ -61,7 +62,7 @@ public class CloudGooglePage extends AbstractPage {
         new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(searchField));
         searchField.sendKeys(user.getSearch());
         searchField.sendKeys(Keys.ENTER);
-        return new SearchResultPage(this.driver);
+        return new SearchResultPage(driver);
     }
 
     public TempMailOrgPage openNewTabTempMailOrgTest(String url) {
@@ -74,7 +75,7 @@ public class CloudGooglePage extends AbstractPage {
 
     public SearchResultPage clickInSearchResult() {
         new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(searchField));
-        return new SearchResultPage(this.driver);
+        return new SearchResultPage(driver);
     }
 
 

@@ -66,10 +66,8 @@ public class SearchResultPage extends AbstractPage {
     public GoogleCloudPlatformPricingCalculatorPage clickOnFirstResult() {
         new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@class='gs-title'][1]")));
         WebElement findElement = driver.findElement(By.xpath("//a[@class='gs-title'][1]"));
-        logger.info("Search performed");
-
-                findElement.click();
-
+        findElement.click();
+        logger.info("first result");
         return new GoogleCloudPlatformPricingCalculatorPage(driver);
     }
 }

@@ -17,6 +17,7 @@ public class CloudsWithUtilsTest extends CommonConditions {
         GoogleCloudPageModel cloudPageModel = GoogleCloudPageCreator.withSearchFromProperty();
         CalculationPageModel calculatorPage = CalculationPageCreator.withCredentialsFromProperty();
         TenMinutesPageModel tenMinutesPageModel = TenMinutesPageCreator.withResultFromProperty();
+        TempMailoPageModel tempMailoPage = TempMailoPageCreator.withResultFromProperty();
         GoogleCloudPlatformPricingCalculatorPage googlePage = new CloudGooglePage(driver)
                 .openPage()
                 .typeInSearch(cloudPageModel)
@@ -42,14 +43,14 @@ public class CloudsWithUtilsTest extends CommonConditions {
                 .switchTabToCalculate();
 
         googlePage
-               .switchToFrameCalculator()
+                .switchToFrameCalculator()
                 .inputTenMinutesEmailInEstimate(tenMinutesPageModel)
                 .clickSendEmailButton()
                 .switchTab();
 
         tenMinutesPage
                 .clickToMailWithSubject()
-             //   .getEstimatedMonthlyCostInEmail(tenMinutesPageModel)
+                //   .getEstimatedMonthlyCostInEmail(tenMinutesPageModel)
                 .getMessageFromTemporaryEmailService(tenMinutesPageModel)
                 .switchTabToCalculate();
 
@@ -57,7 +58,7 @@ public class CloudsWithUtilsTest extends CommonConditions {
                 .switchToFrameCalculator()
                 .getEstimatedCost();
 
-
-
+        assertThat(GoogleCloudPlatformPricingCalculatorPage.estimatedMonthlyCostInGoogleCalculator,
+                is(equalTo(TenMinutesPage.estimatedMonthlyCostInEmailString)));
     }
 }
