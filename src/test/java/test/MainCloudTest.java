@@ -34,6 +34,7 @@ public class MainCloudTest {
     public void browserRun() {
         WebDriverManager.firefoxdriver().setup();
         driver = new FirefoxDriver();
+        driver.manage().window().maximize();
     }
 
     @Test(description = "Open google cloud page")
@@ -135,7 +136,12 @@ public class MainCloudTest {
                 .selectCommittedUsage(COMMITTED_USAGE)
                 .clickAddToEstimate()
                 .getEstimatedCostString()
-                .getEstimatedCost();
+                .getEstimatedCost()
+                .createNewTab()
+                .switchTabAndWait()
+                .returnTabWithCalc()
+                ;
+
     }
 
 

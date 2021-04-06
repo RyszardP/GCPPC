@@ -144,6 +144,8 @@ public class GoogleCloudPlatformPricingCalculatorPage extends AbstractPage {
 
 
     public GoogleCloudPlatformPricingCalculatorPage selectOSSoftware(String oS) {
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});"
+                , operatingSystemDropMenu);
         while (operatingSystemDropMenu.getAttribute("aria-expanded").equalsIgnoreCase("false")) {
             new WebDriverWait(driver, 10).until(visibilityOf(operatingSystemDropMenu))
                     .click();
@@ -163,10 +165,13 @@ public class GoogleCloudPlatformPricingCalculatorPage extends AbstractPage {
     }
 
     public GoogleCloudPlatformPricingCalculatorPage selectMachineClass(String machineClass) {
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});"
+                , vMClassDropDownMenu);
         while (vMClassDropDownMenu.getAttribute("aria-expanded").equalsIgnoreCase("false")) {
             new WebDriverWait(driver, 5).until(visibilityOf(vMClassDropDownMenu))
                     .click();
         }
+
         driver.findElement(By.xpath("//div[contains(@class,'md-active')]//md-option[contains(.,'"
                 + machineClass + "')]")).click();
         logger.info("Select machine class");
@@ -185,10 +190,16 @@ public class GoogleCloudPlatformPricingCalculatorPage extends AbstractPage {
     }
 
     public GoogleCloudPlatformPricingCalculatorPage selectSeries(String series) {
+
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});"
+                , seriesDropDownMenu);
+
         while (seriesDropDownMenu.getAttribute("aria-expanded").equalsIgnoreCase("false")) {
             new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS).until(visibilityOf(seriesDropDownMenu))
                     .click();
         }
+
+
         driver.findElement(By.xpath("//div[contains(@class, 'md-active')]//md-option[contains(.,'" + series + "')]")).click();
         logger.info("Select series");
         return this;
@@ -206,10 +217,16 @@ public class GoogleCloudPlatformPricingCalculatorPage extends AbstractPage {
     }
 
     public GoogleCloudPlatformPricingCalculatorPage selectInstance(String typeOfMachine) {
+
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});"
+                , instanceTypeDropDown);
+
         while (instanceTypeDropDown.getAttribute("aria-expanded").equalsIgnoreCase("false")) {
             new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS).until(visibilityOf(instanceTypeDropDown))
                     .click();
         }
+
+
         driver.findElement(By.xpath("//div[contains(@class, 'md-active')]//md-option[contains(.,'" +
                 typeOfMachine + "')]")).click();
         logger.info("Select instances");
@@ -221,7 +238,7 @@ public class GoogleCloudPlatformPricingCalculatorPage extends AbstractPage {
             new WebDriverWait(driver, 10).until(visibilityOf(instanceTypeDropDown))
                     .click();
         }
-        logger.info("Instance selected");
+
         driver.findElement(By.xpath("//div[contains(@class, 'md-active')]//md-option[contains(.,'" +
                 pageModel.getInstanceType() + "')]")).click();
         logger.info("Select instances");
@@ -264,11 +281,16 @@ public class GoogleCloudPlatformPricingCalculatorPage extends AbstractPage {
 
 
     public GoogleCloudPlatformPricingCalculatorPage selectSSD(String localSSD) {
+
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});"
+                , localSSDDropDown);
+
         while (localSSDDropDown.getAttribute("aria-expanded").equalsIgnoreCase("false")) {
             new WebDriverWait(driver, 5).until(visibilityOf(localSSDDropDown))
                     .click();
         }
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", localSSDDropDown);
+
+
         driver.findElement(By.xpath("//md-option/div[contains(text(),'" + localSSD + "')]")).click();
         logger.info("Select SSD");
         return this;
@@ -286,10 +308,15 @@ public class GoogleCloudPlatformPricingCalculatorPage extends AbstractPage {
     }
 
     public GoogleCloudPlatformPricingCalculatorPage selectLocation(String location) {
+
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});"
+                , locationDropDown);
+
         while (locationDropDown.getAttribute("aria-expanded").equalsIgnoreCase("false")) {
             locationDropDown.click();
         }
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", locationDropDown);
+
+
         driver.findElement(By.xpath("//div[@aria-hidden = 'false']//div[contains(text(),'" +
                 location + "')]"))
                 .click();
@@ -311,11 +338,16 @@ public class GoogleCloudPlatformPricingCalculatorPage extends AbstractPage {
 
 
     public GoogleCloudPlatformPricingCalculatorPage selectCommittedUsage(String usage) {
+
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});"
+                , committedUsageDropDown);
+
         while (committedUsageDropDown.getAttribute("aria-expanded").equalsIgnoreCase("false")) {
             new WebDriverWait(driver, 5).until(visibilityOf(committedUsageDropDown))
                     .click();
         }
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", committedUsageDropDown);
+
+
         driver.findElement(By.xpath("//div[contains(@class,'md-active')]//div[contains(text(), '" + usage + "')]")).click();
         logger.info("Select Committed Usage");
         return this;
@@ -349,6 +381,21 @@ public class GoogleCloudPlatformPricingCalculatorPage extends AbstractPage {
         return this;
     }
 
+    public GoogleCloudPlatformPricingCalculatorPage switchTabAndWait() {
+        tabs = new ArrayList<String>(driver.getWindowHandles());
+        driver.switchTo().window(tabs.get(1));
+        new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS);
+        return this;
+    }
+
+    public GoogleCloudPlatformPricingCalculatorPage returnTabWithCalc(){
+        tabs = new ArrayList<String>(driver.getWindowHandles());
+        driver.switchTo().window(tabs.get(0));
+        new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS);
+        return this;
+    }
+
+
     public GoogleCloudPlatformPricingCalculatorPage switchToFrameCalculator() {
         new WebDriverWait(driver, 10).until(elementToBeClickable(frame));
         driver.switchTo().frame(0);
@@ -381,8 +428,6 @@ public class GoogleCloudPlatformPricingCalculatorPage extends AbstractPage {
     }
 
     public GoogleCloudPlatformPricingCalculatorPage inputTempMailoInEstimate(TempMailoPageModel pageModel) {
-        //  driver.switchTo().defaultContent();
-        //  ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", emailFieldInEstimate);
         new WebDriverWait(driver, 15).until(visibilityOf(emailFieldInEstimate))
                 .sendKeys(pageModel.getEmailAddress());
         return this;

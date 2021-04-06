@@ -35,11 +35,9 @@ public class TestListener implements ITestListener {
     }
 
     public void onTestFailedButWithinSuccessPercentage(ITestResult iTestResult) {
-
     }
 
     public void onStart(ITestContext iTestContext) {
-
     }
 
     public void onFinish(ITestContext iTestContext) {
