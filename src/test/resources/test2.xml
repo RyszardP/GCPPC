@@ -1,9 +1,9 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
-<suite name="Tests" verbose="1" >
-    <test name="Test with user utils" >
+<suite name="Test" verbose="1" >
+    <test name="Test with calculator page only" >
         <classes>
-            <class name="test.UserSearchTest" />
+            <class name="test.WithSimpleCalculatorTest" />
         </classes>
     </test>
 </suite>
