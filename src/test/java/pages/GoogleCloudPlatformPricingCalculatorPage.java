@@ -206,11 +206,13 @@ public class GoogleCloudPlatformPricingCalculatorPage extends AbstractPage {
     }
 
     public GoogleCloudPlatformPricingCalculatorPage selectSeriesWithUtil(CalculationPageModel pageModel) {
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});"
+                , seriesDropDownMenu);
         while (seriesDropDownMenu.getAttribute("aria-expanded").equalsIgnoreCase("false")) {
             new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS).until(visibilityOf(seriesDropDownMenu))
                     .click();
         }
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", seriesDropDownMenu);
+
         driver.findElement(By.xpath("//div[contains(@class, 'md-active')]//md-option[contains(.,'" +
                 pageModel.getSeries() + "')]")).click();
         return this;
