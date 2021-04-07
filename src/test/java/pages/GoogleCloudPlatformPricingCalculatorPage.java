@@ -248,6 +248,8 @@ public class GoogleCloudPlatformPricingCalculatorPage extends AbstractPage {
     }
 
     public GoogleCloudPlatformPricingCalculatorPage selectCheckBoxGPU(Integer numberOfGPUs, String gpuType) {
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});"
+                , addGpuCheckBox);
         if (addGpuCheckBox.getAttribute("aria-disabled").equalsIgnoreCase("false")) {
             new WebDriverWait(driver, 10).until(visibilityOf(addGpuCheckBox))
                     .click();
@@ -265,11 +267,13 @@ public class GoogleCloudPlatformPricingCalculatorPage extends AbstractPage {
     }
 
     public GoogleCloudPlatformPricingCalculatorPage selectCheckBoxGPUWithUtil(CalculationPageModel pageModel) {
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});"
+                , addGpuCheckBox);
         if (addGpuCheckBox.getAttribute("aria-disabled").equalsIgnoreCase("false")) {
             new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS).until(visibilityOf(addGpuCheckBox))
                     .click();
         }
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", addGpuCheckBox);
+
         new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
                 .until(ExpectedConditions.elementToBeClickable(gpuQuantityDropDown)).click();
         driver.findElement(By.xpath("//md-option[contains(@ng-disabled, " +
@@ -299,11 +303,13 @@ public class GoogleCloudPlatformPricingCalculatorPage extends AbstractPage {
     }
 
     public GoogleCloudPlatformPricingCalculatorPage selectSSDWithUtil(CalculationPageModel pageModel) {
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});"
+                , localSSDDropDown);
         while (localSSDDropDown.getAttribute("aria-expanded").equalsIgnoreCase("false")) {
             new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS).until(visibilityOf(localSSDDropDown))
                     .click();
         }
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", localSSDDropDown);
+
         driver.findElement(By.xpath("//md-option/div[contains(text(),'" + pageModel.getSsd() + "')]")).click();
         logger.info("Select SSD");
         return this;
@@ -327,10 +333,12 @@ public class GoogleCloudPlatformPricingCalculatorPage extends AbstractPage {
     }
 
     public GoogleCloudPlatformPricingCalculatorPage selectLocationWithUtil(CalculationPageModel pageModel) {
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});"
+                , locationDropDown);
         while (locationDropDown.getAttribute("aria-expanded").equalsIgnoreCase("false")) {
             locationDropDown.click();
         }
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", locationDropDown);
+
         driver.findElement(By.xpath("//div[@aria-hidden = 'false']//div[contains(text(),'" +
                 pageModel.getLocation() + "')]"))
                 .click();
@@ -357,6 +365,9 @@ public class GoogleCloudPlatformPricingCalculatorPage extends AbstractPage {
 
 
     public GoogleCloudPlatformPricingCalculatorPage selectCommittedUsageWithUtil(CalculationPageModel pageModel) {
+
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});"
+                , committedUsageDropDown);
         while (committedUsageDropDown.getAttribute("aria-expanded").equalsIgnoreCase("false")) {
             new WebDriverWait(driver, 5).until(visibilityOf(committedUsageDropDown))
                     .click();
@@ -390,7 +401,7 @@ public class GoogleCloudPlatformPricingCalculatorPage extends AbstractPage {
         return this;
     }
 
-    public GoogleCloudPlatformPricingCalculatorPage returnTabWithCalc(){
+    public GoogleCloudPlatformPricingCalculatorPage returnTabWithCalc() {
         tabs = new ArrayList<String>(driver.getWindowHandles());
         driver.switchTo().window(tabs.get(0));
         new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS);
